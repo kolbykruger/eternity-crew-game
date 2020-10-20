@@ -11,7 +11,7 @@
             </div>
 
             <div class="buttons" v-if="showNextButton">
-                <button class="button" @click="nextQA">Next question</button>
+                <button class="button dark" @click="nextQA">Next question</button>
             </div>
         </div>
         <div v-else>
@@ -82,14 +82,16 @@ export default {
 
             if (matches && i != 1) {
             //create an object of keys that match the currently looped row
-                let obj = {
-                    question: matches[0],
-                    answer: matches[1],
-                    person: matches[2]
-                }
+                if (matches[0] && matches[1] && matches[2]) {
+                    let obj = {
+                        question: matches[0],
+                        answer: matches[1],
+                        person: matches[2]
+                    }
 
-                // push this object to a data structure for the app
-                matchedArray.push(obj)
+                    // push this object to a data structure for the app
+                    matchedArray.push(obj)
+                }
             }
             }
 
@@ -178,5 +180,9 @@ button {
     cursor: pointer;
     overflow: hidden;
     font-family: inherit;
+
+    &.dark {
+        background: #212121;
+    }
 }
 </style>
