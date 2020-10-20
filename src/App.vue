@@ -5,7 +5,9 @@
     <div v-if="gameData">
         <div v-if="stage < gameData.length">
             <div class="game">
-                <QA :data="gameData[stage]" :stage="gameStage" @stage="showControls"/>
+
+                    <QA :data="gameData[stage]" :stage="gameStage" @stage="showControls"/>
+
             </div>
 
             <div class="buttons" v-if="showNextButton">
@@ -49,33 +51,49 @@ export default {
       .then(data => {
           let arr = data.feed.entry
 
-            //Remove the headers
-          arr.splice(0, 1)
-          arr.splice(0, 1)
-
             //create a keyed array based on cell value for future matching
             const keyedArray = []
+            let count = [];
           arr.forEach((item) => {
-              const id = item.title.$t.split('')[1]
+              const row = item.title.$t.replace(/\D+/g, '');
+              const col = item.title.$t.split('')[0]
               keyedArray.push({
-                  id: id - 2,
+                  row: row,
+                  col: col,
                   text: item.content.$t
               })
+              count.push(row)
           })
+
+            //created header object just in case we need to reference the headers
+            let headerObject = [];
+            keyedArray.forEach((item) => {
+                if (item.row == 1) {
+                    headerObject.push(item)
+                }
+            })
 
             //create array of matched rows based on cell value
           let matchedArray = []
-          for(let i = 0; i < keyedArray.length / 2; i++) {
-              let matches = keyedArray.filter(item => item.id == i)
-              let obj = {
-                  question: matches[0].text,
-                  answer: matches[1].text
-              }
+          for(let i = 1; i < Math.max.apply(Math, count); i++) {
 
-              matchedArray.push(obj)
+              // find matches for the row
+            let matches = keyedArray.filter(item => item.row == i)
 
-          }
+            if (matches && i != 1) {
+            //create an object of keys that match the currently looped row
+                let obj = {
+                    question: matches[0],
+                    answer: matches[1],
+                    person: matches[2]
+                }
 
+                // push this object to a data structure for the app
+                matchedArray.push(obj)
+            }
+            }
+
+            //shuffle funciton to keep the game interesting
           function shuffle(a) {
               var j, x, i;
                 for (i = a.length - 1; i > 0; i--) {
@@ -130,7 +148,8 @@ export default {
     right: 1em;
     text-align: center;
     font-weight: 600;
-    opacity: 0.25;
+    opacity: 0.15;
+    display: none;
 }
 
 .buttons {

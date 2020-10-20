@@ -1,13 +1,18 @@
 <template>
-    <div class="question-answer">
+    <div class="question-answer" v-if="ready">
+        <div class="prompt">
+            <p>
+                {{ data['question'].text }}
+            </p>
+        </div>
         <div class="question">
             <p>
-                {{ data['question'] }}
+                {{ data['answer'].text }}
             </p>
         </div>
         <div class="answer" :class="{ 'answer-hidden': !answerShown }">
             <p>
-                {{ data['answer'] }}
+                {{ data['person'].text }}
             </p>
         </div>
         <div class="buttons" v-if="!answerShown">
@@ -25,7 +30,8 @@ export default {
   },
   data() {
       return {
-          answerShown: false
+          answerShown: false,
+          ready: false,
       }
   },
   methods: {
@@ -36,6 +42,7 @@ export default {
   },
   mounted() {
       this.answerShown = false
+      this.ready = true
   },
   watch: {
       data() {
@@ -50,12 +57,21 @@ p {
     margin: 0;
 }
 
+.prompt {
+    position: relative;
+    font-size: clamp(1.25rem, calc(1rem + 3vw), 1.5rem);
+    margin-bottom: 6rem;
+    opacity: 0.45;
+}
+
+h2,
 .question {
     font-size: clamp(3rem, calc(1rem + 4vw), 5rem);
 }
+
 .answer {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-top: 6rem;
+    margin-bottom: 6rem;
     color: #ef4538;
     font-size: clamp(2rem, calc(1rem + 3vw), 3rem);
     transition: 350ms cubic-bezier(0.34, 2, 0.64, 1);
