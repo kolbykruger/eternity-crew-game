@@ -23,33 +23,33 @@
 
 <script>
 export default {
-  name: "QA",
-  props: {
-    data: Object,
-    stage: Boolean
-  },
-  data() {
-      return {
-          answerShown: false,
-          ready: false,
-      }
-  },
-  methods: {
-      showAnswer() {
-          this.answerShown = !this.answerShown
-          this.$emit('stage', this.answerShown)
-      }
-  },
-  mounted() {
-      this.answerShown = false
-      this.ready = true
-  },
-  watch: {
-      data() {
-          this.answerShown = false
-      }
-  }
-};
+    name: 'QA',
+    props: {
+        data: Object,
+        stage: Boolean
+    },
+    data() {
+        return {
+            answerShown: false,
+            ready: false
+        }
+    },
+    methods: {
+        showAnswer() {
+            this.answerShown = !this.answerShown
+            this.$emit('stage', this.answerShown)
+        }
+    },
+    mounted() {
+        this.answerShown = false
+        this.ready = true
+    },
+    watch: {
+        data() {
+            this.answerShown = false
+        }
+    }
+}
 </script>
 
 <style lang="scss">
