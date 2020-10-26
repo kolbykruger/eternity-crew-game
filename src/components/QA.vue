@@ -26,6 +26,7 @@
                 :disabled="answerShown"
             >
                 <img :src="name + '.png'" />
+                <p>{{ name }}</p>
             </button>
             <br /><br />
             <p v-if="!answerShown">{{ picks }} guesses remaining</p>
@@ -168,13 +169,9 @@ h2,
         -moz-appearance: none;
         background: none;
         border: none;
-        border: 3px solid transparent;
         outline: none;
         font-family: inherit;
         font-size: 1.25rem;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
         padding: 0;
         margin: 0 0.25em;
         overflow: hidden;
@@ -183,34 +180,52 @@ h2,
         transition: 160ms ease;
 
         &:hover {
-            transform: translate(0, -5px);
+            transform: translate(0, -6px);
+
+            p {
+                transform: translateY(0);
+                opacity: 0.6;
+            }
         }
 
         img {
             object-fit: cover;
-            width: 100%;
-            height: 100%;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+        }
+
+        p {
+            font-size: 1rem;
+            opacity: 0;
+            transform: translateY(-50%);
+            transition: 160ms ease;
         }
 
         &-chosen {
             opacity: 0.2;
-            border: 3px solid #222;
+
+            img {
+                border: 3px solid #222;
+            }
         }
     }
 
     &-reveal {
         .choice-answer {
-            border: 3px solid #ef4538;
-            background: #ef4538;
             opacity: 1;
 
             img {
+                border: 3px solid #ef4538;
                 opacity: 0.5;
             }
 
             &.choice-chosen {
-                border: 3px solid #2dd881;
-                background: #2dd881;
+                img {
+                    border: 3px solid #2dd881;
+                    opacity: 0.5;
+                }
             }
         }
     }
