@@ -11,11 +11,11 @@
             </p>
         </div>
         <div class="answer" :class="{ 'answer-hidden': !answerShown }">
-            <p>
+            <p :class="answerValidator">
                 {{ data['person'].text }}
             </p>
         </div>
-        <div class="choices">
+        <div class="choices" ref="choices">
             <button
                 class="choice"
                 v-for="name in choices"
@@ -23,15 +23,12 @@
                 @click="choice(name)"
                 :class="isChosen(name)"
                 :title="name"
+                :disabled="answerShown"
             >
                 <img :src="name + '.png'" />
             </button>
-            <br />
-            <br />
-            {{ picks }} guesses remaining
-        </div>
-        <div class="buttons" v-if="!answerShown">
-            <button class="button" @click="showAnswer">Show Answer</button>
+            <br /><br />
+            <p v-if="!answerShown">{{ picks }} guesses remaining</p>
         </div>
     </div>
 </template>
@@ -46,6 +43,7 @@ export default {
     data() {
         return {
             answerShown: false,
+            answer: null,
             ready: false,
             picks: 2,
             chosen: [],
@@ -60,10 +58,19 @@ export default {
             ]
         }
     },
-    computed: {},
+    computed: {
+        answerValidator() {
+            if (this.chosen.includes(this.answer)) {
+                return `answer-correct`
+            } else {
+                return `answer-incorrect`
+            }
+        }
+    },
     methods: {
         showAnswer() {
             this.answerShown = true
+            this.$refs.choices.classList.add('choices-reveal')
             this.$emit('stage', this.answerShown)
         },
         choice(name) {
@@ -79,13 +86,20 @@ export default {
             this.picks = this.picks - 1
         },
         isChosen(name) {
+            let chosen = '',
+                answer = ''
             if (this.chosen.includes(name)) {
-                return 'choice-chosen'
+                chosen = 'choice-chosen'
             }
+            if (name == this.answer) {
+                answer = 'choice-answer'
+            }
+            return chosen + ' ' + answer
         }
     },
     mounted() {
         this.answerShown = false
+        this.answer = this.data['person'].text
         this.ready = true
         this.picks = 2
         this.chosen = []
@@ -93,13 +107,16 @@ export default {
     watch: {
         data() {
             this.answerShown = false
+            this.answer = this.data['person'].text
             this.picks = 2
             this.ready = true
             this.chosen = []
+            this.$refs.choices.classList.remove('choices-reveal')
         },
         picks() {
             if (this.picks == 0) {
                 this.showAnswer()
+                this.$refs.choices.classList.add('choices-reveal')
             }
         }
     }
@@ -132,6 +149,10 @@ h2,
     transform: scale(1);
     opacity: 1;
 
+    .answer-correct {
+        color: #2dd881;
+    }
+
     &-hidden {
         opacity: 0;
         transform: scale(0);
@@ -147,6 +168,7 @@ h2,
         -moz-appearance: none;
         background: none;
         border: none;
+        border: 3px solid transparent;
         outline: none;
         font-family: inherit;
         font-size: 1.25rem;
@@ -157,6 +179,7 @@ h2,
         margin: 0 0.25em;
         overflow: hidden;
         cursor: pointer;
+        user-select: none;
 
         img {
             object-fit: cover;
@@ -166,6 +189,24 @@ h2,
 
         &-chosen {
             opacity: 0.2;
+            border: 3px solid #222;
+        }
+    }
+
+    &-reveal {
+        .choice-answer {
+            border: 3px solid #ef4538;
+            background: #ef4538;
+            opacity: 1;
+
+            img {
+                opacity: 0.5;
+            }
+
+            &.choice-chosen {
+                border: 3px solid #2dd881;
+                background: #2dd881;
+            }
         }
     }
 }
