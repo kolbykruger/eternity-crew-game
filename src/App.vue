@@ -161,7 +161,7 @@ export default {
     margin-top: 3rem;
 }
 
-button {
+.button {
     border: none;
     outline: none;
     -webkit-appearance: none;
