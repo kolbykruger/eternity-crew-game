@@ -180,6 +180,11 @@ h2,
         overflow: hidden;
         cursor: pointer;
         user-select: none;
+        transition: 160ms ease;
+
+        &:hover {
+            transform: translate(0, -5px);
+        }
 
         img {
             object-fit: cover;
