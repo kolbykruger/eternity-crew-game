@@ -133,12 +133,14 @@ p {
     position: relative;
     font-size: clamp(1.25rem, calc(1rem + 3vw), 1.5rem);
     margin-bottom: 6rem;
-    opacity: 0.45;
+    opacity: 0.65;
 }
 
 h2,
 .question {
-    font-size: clamp(3rem, calc(1rem + 4vw), 5rem);
+    font-size: clamp(3rem, calc(1rem + 4vw), 4.25rem);
+    max-width: 960px;
+    margin: 0 auto;
 }
 
 .answer {
@@ -218,13 +220,13 @@ h2,
 
             img {
                 border: 3px solid #ef4538;
-                opacity: 0.5;
+                opacity: 1;
             }
 
             &.choice-chosen {
                 img {
                     border: 3px solid #2dd881;
-                    opacity: 0.5;
+                    opacity: 1;
                 }
             }
         }
