@@ -85,10 +85,7 @@ export default {
         choice(name) {
             //if (this.picks)
             if (name == this.data['person'].text) {
-                console.log('Correct!')
                 this.showAnswer()
-            } else {
-                console.log('Incorrect')
             }
 
             this.chosen.push(name)
@@ -139,14 +136,14 @@ p {
 
 .prompt {
     position: relative;
-    font-size: clamp(1.25rem, calc(1rem + 3vw), 1.5rem);
+    font-size: clamp(1.15rem, calc(1rem + 3vw), 1.5rem);
     margin-bottom: 6rem;
     opacity: 0.65;
 }
 
 h2,
 .question {
-    font-size: clamp(3rem, calc(1rem + 4vw), 4.25rem);
+    font-size: clamp(2rem, calc(1rem + 4vw), 4.25rem);
     max-width: 960px;
     margin: 0 auto;
 }

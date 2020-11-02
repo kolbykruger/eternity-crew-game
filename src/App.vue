@@ -158,7 +158,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 80vh;
+    min-height: 80vh;
 }
 .game-name {
     position: absolute;
@@ -209,6 +209,8 @@ export default {
     right: 1em;
     display: flex;
     align-items: flex-end;
+    user-select: none;
+    pointer-events: none;
 
     div {
         margin: 0 0.5em;
