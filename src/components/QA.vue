@@ -29,7 +29,7 @@
                 <p>{{ name }}</p>
             </button>
             <br /><br />
-            <p v-if="!answerShown">{{ picks }} guesses remaining</p>
+            <p v-if="!answerShown">{{ picks }} guess remaining</p>
         </div>
     </div>
 </template>
