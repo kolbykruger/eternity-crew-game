@@ -1,6 +1,8 @@
 <template>
     <div class="question-answer" v-if="ready">
         <div class="prompt">
+            <p style="opacity: 0.25">Question #{{ $store.state.count }}</p>
+            <br />
             <p>
                 {{ data['question'].text }}
             </p>
@@ -29,7 +31,7 @@
                 <p>{{ name }}</p>
             </button>
             <br /><br />
-            <p v-if="!answerShown">{{ picks }} guess remaining</p>
+            <!-- <p v-if="!answerShown">{{ picks }} guess remaining</p> -->
         </div>
     </div>
 </template>
@@ -73,6 +75,12 @@ export default {
             this.answerShown = true
             this.$refs.choices.classList.add('choices-reveal')
             this.$emit('stage', this.answerShown)
+
+            if (this.chosen.includes(this.answer)) {
+                this.$store.commit('incrementCorrect')
+            } else {
+                this.$store.commit('incrementIncorrect')
+            }
         },
         choice(name) {
             //if (this.picks)

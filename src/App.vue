@@ -17,6 +17,17 @@
                         Next question
                     </button>
                 </div>
+
+                <div class="scoreboard" v-if="$store.state.count > 0">
+                    <div v-if="$store.state.correct > 0">
+                        <p>{{ $store.state.correct }}</p>
+                        <p class="label">Correct</p>
+                    </div>
+                    <div v-if="$store.state.incorrect > 0">
+                        <p>{{ $store.state.incorrect }}</p>
+                        <p class="label">Incorrect</p>
+                    </div>
+                </div>
             </div>
             <div v-else>
                 <h2>Game Over</h2>
@@ -99,6 +110,8 @@ export default {
                     }
                 }
 
+                $el.$store.state.total = matchedArray.length
+
                 //shuffle funciton to keep the game interesting
                 function shuffle(a) {
                     var j, x, i
@@ -121,6 +134,7 @@ export default {
         nextQA() {
             this.stage = this.stage + 1
             this.showNextButton = false
+            this.$store.commit('incrementCount')
         },
         showControls(value) {
             this.showNextButton = value
@@ -187,5 +201,32 @@ export default {
     &.dark {
         background: #212121;
     }
+}
+
+.scoreboard {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    display: flex;
+    align-items: flex-end;
+
+    div {
+        margin: 0 0.5em;
+
+        p {
+            font-size: clamp(1.25rem, calc(1rem + 3vw), 1.5rem);
+            margin-bottom: 0.5rem;
+            opacity: 0.45;
+
+            &.label {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+.counter {
+    margin-top: 1em;
+    opacity: 0.65;
 }
 </style>
