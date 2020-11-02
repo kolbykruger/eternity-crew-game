@@ -49,6 +49,7 @@ export default {
             answer: null,
             ready: false,
             picks: 1,
+            scoreboard: false,
             chosen: [],
             choices: [
                 'Mike',
@@ -76,18 +77,16 @@ export default {
             this.$refs.choices.classList.add('choices-reveal')
             this.$emit('stage', this.answerShown)
 
-            if (this.chosen.includes(this.answer)) {
-                this.$store.commit('incrementCorrect')
-            } else {
-                this.$store.commit('incrementIncorrect')
+            if (!this.scoreboard) {
+                if (this.chosen.includes(this.answer)) {
+                    this.$store.commit('incrementCorrect')
+                } else {
+                    this.$store.commit('incrementIncorrect')
+                }
+                this.scoreboard == !this.scoreboard
             }
         },
         choice(name) {
-            //if (this.picks)
-            if (name == this.data['person'].text) {
-                this.showAnswer()
-            }
-
             this.chosen.push(name)
             this.picks = this.picks - 1
         },
@@ -109,6 +108,7 @@ export default {
         this.ready = true
         this.picks = 1
         this.chosen = []
+        this.scoreboard = false
     },
     watch: {
         data() {
@@ -117,6 +117,7 @@ export default {
             this.picks = 1
             this.ready = true
             this.chosen = []
+            this.scoreboard = false
             this.$refs.choices.classList.remove('choices-reveal')
         },
         picks() {
