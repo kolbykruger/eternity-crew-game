@@ -46,7 +46,7 @@ export default {
             answerShown: false,
             answer: null,
             ready: false,
-            picks: 2,
+            picks: 1,
             chosen: [],
             choices: [
                 'Mike',
@@ -102,14 +102,14 @@ export default {
         this.answerShown = false
         this.answer = this.data['person'].text
         this.ready = true
-        this.picks = 2
+        this.picks = 1
         this.chosen = []
     },
     watch: {
         data() {
             this.answerShown = false
             this.answer = this.data['person'].text
-            this.picks = 2
+            this.picks = 1
             this.ready = true
             this.chosen = []
             this.$refs.choices.classList.remove('choices-reveal')
