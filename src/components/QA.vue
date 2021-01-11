@@ -58,7 +58,8 @@ export default {
                 'Kolby',
                 'Meghan',
                 'Shawna',
-                'Grace'
+                'Grace',
+                'Isabelle'
             ]
         }
     },
@@ -144,7 +145,7 @@ p {
 
 h2,
 .question {
-    font-size: clamp(2rem, calc(1rem + 4vw), 4.25rem);
+    font-size: clamp(2rem, calc(1rem + 2vw), 4.25rem);
     max-width: 960px;
     margin: 0 auto;
 }
